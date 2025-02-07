@@ -51,10 +51,10 @@ jobs:
           SUBDOMAIN="${WORKER_NAME}.${DOMAIN_NAME}"
 
           echo "🌟 Setting WORKER_NAME to: ${WORKER_NAME}"
-          sed -i "s/%worker_name%/${WORKER_NAME}/g" ./vless/wrangler.toml
+          sed -i "s/%worker_name%/${WORKER_NAME}/g" ./me/wrangler.toml
 
           echo "🌟 Setting SUBDOMAIN to: ${SUBDOMAIN}"
-          sed -i "s/%subdomain_name%/${SUBDOMAIN}/g" ./vless/wrangler.toml
+          sed -i "s/%subdomain_name%/${SUBDOMAIN}/g" ./me/wrangler.toml
 
       # Step 6: List files in the 'vless' directory
       - name: 📂 List Files in 'vless' Directory
