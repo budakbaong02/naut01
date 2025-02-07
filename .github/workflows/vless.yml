@@ -1,0 +1,74 @@
+name: 🌐 Build and Deploy Vless Worker
+
+on:
+  workflow_dispatch:
+    inputs:
+      WORKER_NAME:
+        description: "🌟 Name of your worker"
+        required: true
+        type: string
+      DOMAIN_NAME:
+        description: "🏠 Name of your domain (not subdomain) at Cloudflare"
+        required: true
+        type: string
+        default: gpj.us.kg
+
+jobs:
+  build:
+    name: 🚀 Build and Deploy Worker
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: 📂 Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js
+      - name: 🛠️ Install Node.js (LTS)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+
+      # Step 3: Install and Update Wrangler
+      - name: 🔄 Install and Update Wrangler
+        run: |
+          echo "⚙️ Uninstalling old Wrangler version (if any)..."
+          npm uninstall -g @cloudflare/wrangler || true
+          echo "⬇️ Installing latest Wrangler version..."
+          npm install -g wrangler
+
+      # Step 4: Check Wrangler version
+      - name: 🔍 Verify Wrangler Installation
+        run: |
+          echo "✅ Checking Wrangler version..."
+          wrangler --version
+
+      # Step 5: Process Variables and Update Configuration
+      - name: 🔧 Process Variables and Update Configuration
+        run: |
+          WORKER_NAME=${{ github.event.inputs.WORKER_NAME }}
+          DOMAIN_NAME=${{ github.event.inputs.DOMAIN_NAME }}
+          SUBDOMAIN="${WORKER_NAME}.${DOMAIN_NAME}"
+
+          echo "🌟 Setting WORKER_NAME to: ${WORKER_NAME}"
+          sed -i "s/%worker_name%/${WORKER_NAME}/g" ./vless/wrangler.toml
+
+          echo "🌟 Setting SUBDOMAIN to: ${SUBDOMAIN}"
+          sed -i "s/%subdomain_name%/${SUBDOMAIN}/g" ./vless/wrangler.toml
+
+      # Step 6: List files in the 'vless' directory
+      - name: 📂 List Files in 'vless' Directory
+        run: |
+          echo "📋 Listing files in 'vless' directory..."
+          ls -R vless
+
+      # Step 7: Change directory and deploy the worker
+      - name: 🚀 Deploy Worker to Cloudflare
+        run: |
+          echo "📂 Changing directory to 'vless'..."
+          cd vless
+          echo "🚀 Deploying worker to Cloudflare..."
+          wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
