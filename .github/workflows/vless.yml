@@ -57,16 +57,16 @@ jobs:
           sed -i "s/%subdomain_name%/${SUBDOMAIN}/g" ./me/wrangler.toml
 
       # Step 6: List files in the 'vless' directory
-      - name: 📂 List Files in 'vless' Directory
+      - name: 📂 List Files in 'me' Directory
         run: |
-          echo "📋 Listing files in 'vless' directory..."
-          ls -R vless
+          echo "📋 Listing files in 'me' directory..."
+          ls -R me
 
       # Step 7: Change directory and deploy the worker
       - name: 🚀 Deploy Worker to Cloudflare
         run: |
-          echo "📂 Changing directory to 'vless'..."
-          cd vless
+          echo "📂 Changing directory to 'me'..."
+          cd me
           echo "🚀 Deploying worker to Cloudflare..."
           wrangler deploy
         env:
