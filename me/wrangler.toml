@@ -1,0 +1,28 @@
+name = "%worker_name%"
+main = "_worker.js"
+compatibility_date = "2023-05-26"
+
+routes = [
+  { pattern = "%subdomain_name%", custom_domain = true },
+  { pattern = "ava.game.naver.com.%subdomain_name%", custom_domain = true },
+  { pattern = "quiz.int.vidio.com.%subdomain_name%", custom_domain = true },
+  { pattern = "business.blibli.com.%subdomain_name%", custom_domain = true },
+  { pattern = "graph.instagram.com.%subdomain_name%", custom_domain = true },
+  { pattern = "live.iflix.com.%subdomain_name%", custom_domain = true },
+  { pattern = "support.zoom.us.%subdomain_name%", custom_domain = true },
+  { pattern = "blog.webex.com.%subdomain_name%", custom_domain = true },
+  { pattern = "investors.spotify.com.%subdomain_name%", custom_domain = true },
+  { pattern = "cache.netflix.com.%subdomain_name%", custom_domain = true },
+  { pattern = "zaintest.vuclip.com.%subdomain_name%", custom_domain = true },
+  { pattern = "ads.ruangguru.com.%subdomain_name%", custom_domain = true },
+  { pattern = "mssdk24-normal-useast2a.tiktokv.com.%subdomain_name%", custom_domain = true },
+  { pattern = "api.midtrans.com.%subdomain_name%", custom_domain = true },
+]
+
+workers_dev = false
+
+[vars]
+CHECK_API_BASE = "https://check.installer.us.kg"
+#UUID = "%uuid%"
+#PROXYIP = "%proxyip%"
+#DNS_RESOLVER_URL = "https://dns.cloudflare.com/dns-query"
